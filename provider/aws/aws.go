@@ -424,7 +424,7 @@ func (p *AWSProvider) submitChanges(ctx context.Context, changes []*route53.Chan
 
 		for i, b := range batchCs {
 			for _, c := range b {
-				log.Infof("Desired change: %s %s %s [Id: %s]", *c.Action, *c.ResourceRecordSet.Name, *c.ResourceRecordSet.Type, z)
+				log.Warnf("Desired change: %s %s %s [Id: %s]", *c.Action, *c.ResourceRecordSet.Name, *c.ResourceRecordSet.Type, z)
 			}
 
 			if !p.dryRun {
@@ -441,7 +441,7 @@ func (p *AWSProvider) submitChanges(ctx context.Context, changes []*route53.Chan
 					failedUpdate = true
 				} else {
 					// z is the R53 Hosted Zone ID already as aws.StringValue
-					log.Infof("%d record(s) in zone %s [Id: %s] were successfully updated", len(b), aws.StringValue(zones[z].Name), z)
+					log.Warnf("%d record(s) in zone %s [Id: %s] were successfully updated", len(b), aws.StringValue(zones[z].Name), z)
 				}
 
 				if i != len(batchCs)-1 {
